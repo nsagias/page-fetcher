@@ -28,6 +28,8 @@ console.log(args[0]);
 
 
 // const address = args[0];
+const address = 'http://www.example.edu/';
+// const address = 'http://www.example.com/';
 const newFileName = args[1];
 console.log(newFileName)
 const content = `Some content!${new Date}()`;
@@ -39,19 +41,29 @@ const geDir =  './';
 
 
 request(address, (error, response, body) => {
-  console.error('error:', error); // Print the error if one occurred
-  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-  console.log('body:', body); // Print the HTML for the Google homepage.
-  fs.writeFile(outputFilename, content, err => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    // file written successfully
-    // if completed do this
-    // console.log(`Downloaded and saved ${1235} bytes to ${newFileName}.`
+  
+ if(error) {
+  console.log(`Received error ${error} exiting`)
+  process.exit(1);
+ }
+ if (response.statusCode === 201) {
+   console.log(
+     `Status code is not 200 Received status code ${response.statusCode} exiting`);
+   process.exit(1);
+ }
+  console.log(response.statusCode) 
+  // console.log('body:', body); // Print the HTML for the Google homepage.
+  // if ()
+  // fs.writeFile(newFileName, content, err => {
+  //   if (err) {
+  //     console.error(err);
+  //     return;
+  //   }
+  //   // file written successfully
+  //   // if completed do this
+  //   // console.log(`Downloaded and saved ${1235} bytes to ${newFileName}.`
 
-  })
+  // })
 });
 
 
